@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using GemotricShapesTDD.Domain.Interfaces;
 
@@ -23,7 +24,7 @@ namespace GemotricShapesTDD.Domain.Entities.TriangleTypes
         }
         public double CalculateArea()
         {
-            throw new NotImplementedException();
+          throw new NotImplementedException("Not implemented. All types of triangle has your self way to calculate area.");
         }
 
         public double CalculatePerimeter()
@@ -33,26 +34,18 @@ namespace GemotricShapesTDD.Domain.Entities.TriangleTypes
 
         public Triangle ClassifyBySides()
         {
-            switch (NumberOfEqualsSides())
-            {
-                case 0: // All sides are note equals.
-                    {
-                        return new ScaleneTriangle(this.Side1, this.Side2, this.Side3);
-                    }
-                case 1:// One equality represents two equals sides.
-                    {
-                        return new IsocelesTriangle(this.Side1, this.Side2, this.Side3);
-                    }
-                case 3: // all sides are equals.
-                    {
-                        return new EquilateralTriangle(this.Side1, this.Side2, this.Side3);
-                    }
 
-                default: // Returns the base triangle. Never gonna happen!
-                    {
-                        return this;
-                    }
-            }
+            var tianglesTable = new Dictionary<int, Triangle>()
+            {
+                {0, new ScaleneTriangle(this.Side1, this.Side2, this.Side3)},
+                {1, new IsocelesTriangle(this.Side1, this.Side2, this.Side3)},
+                {3, new EquilateralTriangle(this.Side1, this.Side2, this.Side3)},
+             };
+
+
+            return tianglesTable[NumberOfEqualsSides()];
+
+            
         }
 
 
